@@ -1,0 +1,30 @@
+<div class="headline">
+  <span class="top-label">Top 10:</span>
+  <span class="category-text" *ngIf="selectedCategory" [@categorySlide]>
+    {{ selectedCategory | titlecase }}
+  </span>
+</div>
+
+<div class="category-menu">
+  <div class="buttons">
+    <button
+      class="category-button"
+      formControlName="tvButtonControl"
+      (click)="switchTab('tv')"
+      [class.active]="selectedCategory === 'tv'"
+    >
+      TV Shows
+    </button>
+    <button
+      class="category-button"
+      formControlName="movieButtonControl"
+      (click)="switchTab('movie')"
+      [class.active]="selectedCategory === 'movie'"
+    >
+      Movies
+    </button>
+  </div>
+  <div class="search-box">
+    <app-search></app-search>
+  </div>
+</div>
