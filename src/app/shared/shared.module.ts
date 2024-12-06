@@ -10,7 +10,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
-import { SearchComponent } from './components/search/search.component';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -25,14 +25,12 @@ import { ItemDetailComponent } from './components/item-detail/item-detail.compon
 import { CardsComponent } from './components/cards/cards.component';
 import { EffectsModule } from '@ngrx/effects';
 import { SharedEffects } from './effects/shared.effects';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
-  declarations: [
-    NavbarComponent,
-    SearchComponent,
-    CardsComponent,
-    ItemDetailComponent,
-  ],
+  declarations: [NavbarComponent, CardsComponent, ItemDetailComponent],
   imports: [
     CommonModule,
     InputTextModule,
@@ -53,17 +51,14 @@ import { SharedEffects } from './effects/shared.effects';
     ReactiveFormsModule,
     IconFieldModule,
     InputIconModule,
-
+    ToastModule,
+    ProgressSpinnerModule,
     StoreModule.forFeature('shared', sharedReducer, {
       metaReducers: metaReducers,
     }),
   ],
-  exports: [
-    NavbarComponent,
-    SearchComponent,
-    CardsComponent,
-    ItemDetailComponent,
-  ],
+  providers: [MessageService],
+  exports: [NavbarComponent, CardsComponent, ItemDetailComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SharedModule {}

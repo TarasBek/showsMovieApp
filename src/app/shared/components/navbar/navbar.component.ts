@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { animate, style, transition, trigger } from '@angular/animations';
 
-import { MediaType } from '../../models/global.types';
+import { ApplicationPart } from '../../models/global.types';
 import { Store } from '@ngrx/store';
 import { selectSelection } from '../../selectors/global.selectors';
 import { GlobalActions } from '../../actions/global.actions';
@@ -42,7 +42,7 @@ export class NavbarComponent implements OnInit {
       this.selectedCategory = selection;
     });
   }
-  switchTab(tab: MediaType) {
+  switchTab(tab: ApplicationPart) {
     if (this.selectedCategory === tab) {
       return;
     }

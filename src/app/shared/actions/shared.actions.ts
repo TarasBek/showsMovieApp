@@ -1,14 +1,22 @@
 import { createAction, props } from '@ngrx/store';
-import { Contents, ItemDetail, MediaType } from '../models/global.types';
+import {
+  Content,
+  Contents,
+  ApplicationPart,
+} from '../models/global.types';
 
 export class SharedActions {
-  public static getTopRateContent = createAction(
+  public static getPhotos = createAction(
     '[Shared] Get Top Rated Content',
-    props<{ path: MediaType }>()
+    props<{ path: ApplicationPart }>()
   );
 
   public static loadTopRatedContentSuccess = createAction(
     '[Shared] Load Global Data Success',
+    props<{ data: Contents }>()
+  );
+  public static loadFavoritesPhotos = createAction(
+    '[Shared] loadFavoritesPhotos',
     props<{ data: Contents }>()
   );
 
@@ -18,7 +26,7 @@ export class SharedActions {
   );
   public static performSearch = createAction(
     '[Shared] performSearch',
-    props<{ path: MediaType; content: string }>()
+    props<{ path: ApplicationPart; content: string }>()
   );
 
   public static saveSearchState = createAction(
@@ -28,10 +36,23 @@ export class SharedActions {
   public static clearSearchState = createAction('[Shared] clearSearchState ');
   public static openItemDetail = createAction(
     '[Shared] openItemDetail',
-    props<{ path: MediaType; id: number }>()
+    props<{ item: Content }>()
   );
   public static loadItemDetailData = createAction(
     '[Shared] loadItemDetailData',
-    props<{ data: ItemDetail }>()
+    props<{ image_url: string }>()
+  );
+  public static addToFavorite = createAction(
+    '[Shared] addToFavorite',
+    props<{ item: Content }>()
+  );
+
+  public static removeFromFavorite = createAction(
+    '[Shared] removeFromFavorite',
+    props<{ item: Content }>()
+  );
+  public static loadMoreContent = createAction(
+    '[Shared] Load More Content',
+    props<{ path: ApplicationPart }>()
   );
 }

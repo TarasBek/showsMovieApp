@@ -1,14 +1,14 @@
 import { Action, createReducer, on } from '@ngrx/store';
 
 import { GlobalActions } from '../actions/global.actions';
-import { MediaType } from '../models/global.types';
+import { ApplicationPart } from '../models/global.types';
 
 export interface GlobalState {
-  selection: MediaType;
+  selection: ApplicationPart;
 }
 
 export const initialState: GlobalState = {
-  selection: 'tv',
+  selection: 'photos',
 };
 
 const _globalReducer = createReducer(

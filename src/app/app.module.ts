@@ -8,8 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonModule } from 'primeng/button';
 import { AppRoutingModule } from './app-routing.module';
 
-import { MoviesModule } from './pages/movies/movies.module';
-import { TvShowsModule } from './pages/tv-shows/tv-shows.module';
+import { PhotosModule } from './pages/photos/photos.module';
+import { FavoritesModule } from './pages/favorites/favorites.module';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -26,6 +26,8 @@ import { GlobalActions } from './shared/actions/global.actions';
 import { TitleRenderer } from './shared/guards/title.guard';
 import { CommonModule } from '@angular/common';
 import { metaReducers } from './shared/shared.state';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   imports: [
@@ -38,21 +40,19 @@ import { metaReducers } from './shared/shared.state';
     SharedModule,
     ButtonModule,
     CommonModule,
-    MoviesModule,
-    TvShowsModule,
+    PhotosModule,
+    FavoritesModule,
     ReactiveFormsModule,
     EffectsModule.forRoot([SharedEffects]),
-
+    ToastModule,
     StoreModule.forFeature('shared', sharedReducer, {
       metaReducers: metaReducers,
     }),
 
     StoreModule.forRoot({ global: globalReducer }),
   ],
-  declarations: [
-    AppComponent,
-  ],
-  providers: [TitleRenderer, GlobalActions, SharedActions],
+  declarations: [AppComponent],
+  providers: [TitleRenderer, GlobalActions, SharedActions, MessageService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })

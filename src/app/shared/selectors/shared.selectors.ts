@@ -3,13 +3,10 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 export const sharedState = createFeatureSelector<SharedState>('shared');
 
-export const selectTopRatedMoviesData = createSelector(
+export const selectPhotos = createSelector(sharedState, (x) => x.content);
+export const selectFavoritedPhotos = createSelector(
   sharedState,
-  (x) => x.content
-);
-export const selectSearchContent = createSelector(
-  sharedState,
-  (x) => x.searchContent
+  (x) => x.favoritePhotos
 );
 export const selectIsDataLoading = createSelector(
   sharedState,

@@ -1,11 +1,12 @@
-import { Content, Contents, ItemDetail } from './models/global.types';
+import { Content, Contents } from './models/global.types';
 import { ActionReducer, MetaReducer } from '@ngrx/store';
 
 import { localStorageSync } from 'ngrx-store-localstorage';
 
 export interface SharedState {
   content: Contents | null;
-  itemDetail: ItemDetail | null;
+  favoritePhotos: Contents | null;
+  itemDetail: Content | null;
   searchContent: string | null;
   loading: boolean;
 }

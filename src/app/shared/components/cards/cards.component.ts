@@ -1,57 +1,71 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-
-import { isNil } from 'lodash';
-
 import { Router } from '@angular/router';
 import {
-  selectSearchContent,
-  selectTopRatedMoviesData,
+  selectFavoritedPhotos,
+  selectPhotos,
 } from '../../selectors/shared.selectors';
 import { SharedActions } from '../../actions/shared.actions';
-import { Content, Contents, MediaType } from '../../models/global.types';
-
-import { SharedState } from '../../shared.state';
-
+import { Content, Contents, ApplicationPart } from '../../models/global.types';
 @Component({
   selector: 'app-cards',
   templateUrl: './cards.component.html',
   styleUrl: './cards.component.scss',
 })
-export class CardsComponent implements OnInit, OnDestroy {
-  @Input() path: MediaType = 'tv';
-  isMovie: boolean = false;
-  data$: Observable<Contents | null>;
+export class CardsComponent implements OnInit, OnChanges {
+  @Input() path: ApplicationPart = 'photos';
   loader = false;
-  private contentSub: Subscription | undefined;
-  constructor(
-    private readonly store: Store<SharedState>,
-    private router: Router
-  ) {
-    this.data$ = this.store.select(selectTopRatedMoviesData);
-  }
+  data$: Observable<Contents | null> | undefined;
+  constructor(private readonly store: Store, private router: Router) {}
 
   ngOnInit() {
-    this.contentSub = this.store.select(selectSearchContent).subscribe((x) => {
-      if (!isNil(x) && !!x) {
-        this.store.dispatch(
-          SharedActions.performSearch({ path: this.path, content: x })
-        );
-      } else {
-        this.store.dispatch(
-          SharedActions.getTopRateContent({ path: this.path })
-        );
-      }
-    });
+    this.store.dispatch(SharedActions.getPhotos({ path: this.path }));
   }
-  ngOnDestroy(): void {
-    this.contentSub?.unsubscribe();
+
+  ngOnChanges() {
+    this.data$ =
+      this.path === 'favorites'
+        ? this.store.select(selectFavoritedPhotos)
+        : this.store.select(selectPhotos);
   }
+
+  @HostListener('window:scroll', ['$event'])
+  onWindowScroll() {
+    const threshold = 200;
+    const position = window.innerHeight + window.scrollY;
+    const height = document.documentElement.scrollHeight;
+    if (
+      !this.loader &&
+      height - position <= threshold &&
+      this.path === 'photos'
+    ) {
+      this.loadMoreContentWithDelay();
+    }
+  }
+
+  loadMoreContentWithDelay() {
+    this.loader = true;
+    const randomDelay = Math.floor(Math.random() * 200) + 200;
+    setTimeout(() => {
+      this.store.dispatch(SharedActions.loadMoreContent({ path: this.path }));
+      this.loader = false;
+    }, randomDelay);
+  }
+
   onCardClick(item: Content) {
-    this.store.dispatch(
-      SharedActions.openItemDetail({ path: this.path, id: item.id })
-    );
-    this.router.navigate([`detail/${this.path}/${item.id}`]);
+    if (this.path === 'favorites') {
+      this.store.dispatch(SharedActions.openItemDetail({ item: item }));
+      this.router.navigate([`detail/${this.path}/${item.id}`]);
+    } else if (this.path === 'photos') {
+      this.store.dispatch(SharedActions.addToFavorite({ item: item }));
+    }
   }
 }

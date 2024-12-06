@@ -2,10 +2,10 @@ import { createReducer, on, createAction } from '@ngrx/store';
 import { SharedActions } from '../actions/shared.actions';
 import { SharedState } from '../shared.state';
 
-
 const initialState: SharedState = {
   content: null,
   itemDetail: null,
+  favoritePhotos: null,
   searchContent: '',
   loading: false,
 };
@@ -13,7 +13,7 @@ const initialState: SharedState = {
 export const sharedReducer = createReducer(
   initialState,
   on(
-    SharedActions.getTopRateContent,
+    SharedActions.getPhotos,
     (state): SharedState => ({
       ...state,
       loading: true,
@@ -23,7 +23,19 @@ export const sharedReducer = createReducer(
     SharedActions.loadTopRatedContentSuccess,
     (state, action): SharedState => ({
       ...state,
-      content: action.data,
+      content: {
+        ...state.content,
+        items: [...(state.content?.items || []), ...(action.data.items || [])],
+      },
+      loading: false,
+    })
+  ),
+
+  on(
+    SharedActions.loadFavoritesPhotos,
+    (state, action): SharedState => ({
+      ...state,
+      favoritePhotos: action.data,
       loading: false,
     })
   ),
@@ -34,35 +46,13 @@ export const sharedReducer = createReducer(
       loading: false,
     })
   ),
-  on(
-    SharedActions.saveSearchState,
-    (state, action): SharedState => ({
-      ...state,
-      searchContent: action.content,
-    })
-  ),
-  on(
-    SharedActions.clearSearchState,
-    (state): SharedState => ({
-      ...state,
-      searchContent: '',
-    
-    })
-  ),
+
   on(
     SharedActions.openItemDetail,
-    (state): SharedState => ({
-      ...state,
-      itemDetail: null,
-      loading: false,
-    })
-  ),
- 
-  on(
-    SharedActions.loadItemDetailData,
     (state, action): SharedState => ({
       ...state,
-      itemDetail: action.data,
+      loading: false,
+      itemDetail: action.item,
     })
   )
 );

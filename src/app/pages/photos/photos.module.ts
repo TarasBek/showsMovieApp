@@ -1,21 +1,21 @@
-import { MoviesComponent } from './movies.component';
+import { PhotosComponent } from './photos.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MoviesRoutingModule } from './movies-roting.module';
+import { PhotosRoutingModule } from './photos-roting.module';
 import { EffectsModule } from '@ngrx/effects';
 import { SharedModule } from '../../shared/shared.module';
 import { SharedEffects } from '../../shared/effects/shared.effects';
 
 @NgModule({
-  declarations: [MoviesComponent],
+  declarations: [PhotosComponent],
   imports: [
     CommonModule,
     EffectsModule.forFeature([SharedEffects]),
-    MoviesRoutingModule,
+    PhotosRoutingModule,
     SharedModule,
   ],
 
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  exports: [MoviesComponent],
+  exports: [PhotosComponent],
 })
-export class MoviesModule {}
+export class PhotosModule {}

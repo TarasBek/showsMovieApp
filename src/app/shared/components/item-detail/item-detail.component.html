@@ -1,20 +1,11 @@
 <div *ngIf="data$ | async as data" class="detail-view">
-  <button class="exit-button" (click)="onExit()">Close</button>
+  <mat-button class="exit-button" (click)="onExit()">Close</mat-button>
   <div class="detail-content">
-    <img
-      class="detail-img"
-      [src]="'https://image.tmdb.org/t/p/w500' + data.poster_path"
-      alt="{{ isMovie ? data.title : data.name }}"
-    />
-    <div class="detail-info">
-      <h1>{{ isMovie ? data.title : data.name }}</h1>
-      <p class="release-date">
-        {{
-          (isMovie ? data.release_date : data.first_air_date) | date : "yyyy"
-        }}
-      </p>
-
-      <p class="overview">{{ data.overview }}</p>
-    </div>
+    
+    <img class="detail-img" [src]="data.download_url" />
   </div>
+
+  <mat-button class="add-button" (click)="removeFromFavorite(data)"
+    >Remove from Favorite</mat-button
+  >
 </div>

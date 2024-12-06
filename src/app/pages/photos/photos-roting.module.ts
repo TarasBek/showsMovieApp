@@ -1,15 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MoviesComponent } from './movies.component';
+import { PhotosComponent } from './photos.component';
 import { ItemDetailComponent } from '../../shared/components/item-detail/item-detail.component';
 
-
 const routes: Routes = [
-  { path: '', component: MoviesComponent },
+  { path: '', component: PhotosComponent },
   {
     path: 'detail/:type/:id',
     component: ItemDetailComponent,
-  
   },
 ];
 
@@ -17,4 +15,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class MoviesRoutingModule {}
+export class PhotosRoutingModule {}

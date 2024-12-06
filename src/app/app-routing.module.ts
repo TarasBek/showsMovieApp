@@ -4,28 +4,30 @@ import { TitleRenderer } from './shared/guards/title.guard';
 import { ItemDetailComponent } from './shared/components/item-detail/item-detail.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '', pathMatch: 'full' }, // Default route
+  { path: '', redirectTo: '', pathMatch: 'full' }, 
   {
-    path: 'movie',
+    path: 'photos',
     loadChildren: () =>
-      import('./pages/movies/movies.module').then((m) => m.MoviesModule),
+      import('./pages/photos/photos.module').then((m) => m.PhotosModule),
     canActivateChild: [TitleRenderer],
-    data: { title: 'Movies' },
+    data: { title: 'Photos' },
   },
 
   {
-    path: 'tv',
+    path: 'favorites',
     loadChildren: () =>
-      import('./pages/tv-shows/tv-shows.module').then((m) => m.TvShowsModule),
+      import('./pages/favorites/favorites.module').then(
+        (m) => m.FavoritesModule
+      ),
     canActivateChild: [TitleRenderer],
-    data: { title: 'Tv Shows' },
+    data: { title: 'Favorites' },
   },
   {
     path: 'detail/:type/:id',
     component: ItemDetailComponent,
   },
 
-  { path: '**', redirectTo: 'tv' },
+  { path: '**', redirectTo: 'favorites' },
 ];
 
 @NgModule({

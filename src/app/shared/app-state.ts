@@ -1,6 +1,5 @@
-import { MediaType } from './models/global.types';
+import { ApplicationPart } from './models/global.types';
 import { SharedState } from './shared.state';
-
 
 export interface AppState {
   sharedState: SharedState;
@@ -8,5 +7,5 @@ export interface AppState {
 }
 
 export interface GlobalState {
-  selection: MediaType;
+  selection: ApplicationPart;
 }

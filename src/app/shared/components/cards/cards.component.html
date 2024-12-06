@@ -1,48 +1,29 @@
 <div class="cards">
-  <ng-container *ngIf="data$ | async as data">
+  <ng-container *ngIf="data$ | async as data;">
     <ng-container *ngIf="data.items && data.items.length > 0; else empty">
       <ng-container *ngFor="let item of data.items">
-        <p-card
-          class="card"
+        <mat-card
           (click)="onCardClick(item)"
-          header="{{ item.title }}"
-          subheader="{{ item.releaseDate | date:'yyyy' }}"
-          [style]="{ width: '260px', height: '550px' }"
+          class="card"
+          appearance="outlined"
         >
-          <ng-template class="p-card-header" pTemplate="header">
-            <img
-              *ngIf="item.posterPath; else noImage"
-              class="card-img"
-              alt="Card"
-              [src]="'https://image.tmdb.org/t/p/w500' + item.posterPath"
-              alt="{{ item.title }}"
-              style="height: '390px'"
-            />
-          </ng-template>
-          <ng-template #noImage>
-            <div
-              class="no-image"
-              [style]="{
-                width: '260px',
-                height: '390px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: '#f0f0f0',
-                borderRadius: '8px'
-              }"
-            >
-              <p>No image available</p>
-            </div>
-          </ng-template>
-          <ng-template pTemplate="footer">
-            <div class="flex gap-3 mt-1"></div>
-          </ng-template>
-        </p-card>
+          <img
+            class="card-img"
+            mat-card-image
+            [src]="item.download_url"
+            alt="Photo"
+          />
+        </mat-card>
       </ng-container>
     </ng-container>
   </ng-container>
+
+  <div *ngIf="loader" class="loader">
+    <p-progressSpinner ariaLabel="loading" />
+  </div>
 </div>
+
 <ng-template #empty>
   <div class="empty-message">Oops! We couldn't find any results.</div>
 </ng-template>
+

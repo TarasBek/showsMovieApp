@@ -10,8 +10,8 @@ import { GlobalActions } from './shared/actions/global.actions';
 export class AppComponent implements OnInit {
   constructor(private readonly router: Router) {}
   ngOnInit() {
-    this.router.navigate(['/tv']);
-    GlobalActions.setSelection({ selection: 'tv' });
+    this.router.navigate(['/photos']);
+    GlobalActions.setSelection({ selection: 'photos' });
   }
 
   navigate(route: string) {
